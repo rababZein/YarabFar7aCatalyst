@@ -1,0 +1,58 @@
+<p>Welcom ya << [% c.user.username %] >> Nawwaaarrrrt ^_^ :))))</p>
+
+<p> ************************************************************************ </p>
+
+<p>
+
+Owner of the Post : [% post.createdby.username %]
+
+
+</p>
+
+<p>
+
+TiTle: [% post.postname %]
+
+
+</p>
+<p>
+
+BoDy: [% post.body %]
+
+
+</p>
+
+<table border="1">
+<tr><th>Id</th><th>user</th><th>comment</th><th>you can delete YOUR comment ONLY</th></tr>
+
+[% FOREACH comment IN comments -%]
+<tr>
+[% IF post.id == comment.postid.id %]
+<td>[% comment.id %]</td>
+<td>[% comment.createdby.username %]</td>
+<td>[% comment.body %]</td>
+[% IF c.user.id == comment.createdby.id %]
+<td>
+	<a href="[%
+        c.uri_for(c.controller.action_for('deletecomment'), [comment.id]) %]">Delete Comment</a>
+
+</td>
+
+[% END -%]
+</tr>
+
+[% END -%]
+[% END -%]
+</table>
+
+<form method="post" action="[%
+        c.uri_for(c.controller.action_for('comment'), [post.id]) %]">
+<table>
+  <tr><td>comment:</td><td><input type="text" name="body"></td></tr>
+  <input type="hidden" name="createdby" value=[%post.createdby.id%]>
+</table>
+<input type="submit" name="Submit" value="Submit">
+</form>
+
+<a href="[%
+        c.uri_for(c.controller('Posts').action_for('list')) %]">All Posts</a>

@@ -1,0 +1,34 @@
+create database catalyst_blog;
+
+
+create table users( 
+     id  int unsigned not null auto_increment primary key, 
+     username varchar(50) not null unique, 
+     
+     email varchar(30) not null unique
+         
+) Engine= Innodb;
+
+
+create table posts( 
+     id  int unsigned not null auto_increment primary key, 
+     postname varchar(50) not null unique,     
+     body varchar(300) not null unique,
+     createdBy int unsigned, 
+     FOREIGN KEY (createdBy) REFERENCES users (id)
+     ON DELETE CASCADE
+         
+) Engine= Innodb;
+
+create table comments( 
+     id  int unsigned not null auto_increment primary key, 
+   
+     body varchar(300) not null unique,
+     createdBy int unsigned, 
+     postId int unsigned,
+     FOREIGN KEY (createdBy) REFERENCES users (id)
+     ON DELETE CASCADE,
+     FOREIGN KEY (postId) REFERENCES posts (id)
+     ON DELETE CASCADE
+         
+) Engine= Innodb;
